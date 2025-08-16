@@ -54,7 +54,7 @@ Store.init(
         timestamps: true,
         tableName: "Stores",
         defaultScope: {
-        attributes: { exclude: ["deletedAt", "createdAt", "updatedAt"] },
+            attributes: { exclude: ["deletedAt", "createdAt", "updatedAt"] },
         },
   }
 );
