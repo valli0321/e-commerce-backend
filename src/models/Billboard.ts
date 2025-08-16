@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, Optional, Op } from "sequelize";
 import sequelize from "../config/db";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,6 +18,19 @@ export default class Billboard extends Model<BillboardAttributes, BillboardCreat
     public imageUrl!: string;
     public storeId!: string;
 
+    static async generateBillboardId(): Promise<string> {
+        const result = await this.max('id', {
+            where: {
+                id: {
+                    [Op.like]: 'BILB%'
+                }
+            }
+        }) as string | null;
+        
+        const lastNumber = result ? parseInt(result.substring(4), 10) : 0;
+        return `BILB${(lastNumber + 1).toString().padStart(6, '0')}`;
+    }
+
     static associate(models: any){
         this.belongsTo(models.Store, {
             foreignKey: "storeId",
@@ -29,9 +42,9 @@ export default class Billboard extends Model<BillboardAttributes, BillboardCreat
 Billboard.init(
     {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: () => uuidv4(),
+            type: DataTypes.STRING,
             primaryKey: true,
+            allowNull: false
         },
         label: {
             type: DataTypes.STRING,
@@ -57,5 +70,13 @@ Billboard.init(
         defaultScope: {
             attributes: { exclude: ["deletedAt", "updatedAt"] },
         },
+        hooks: {
+            beforeValidate: async (billboard) => {
+                if (!billboard.id) {
+                    billboard.id = await Billboard.generateBillboardId();
+                }
+            }
+        }
+
     }
 );
