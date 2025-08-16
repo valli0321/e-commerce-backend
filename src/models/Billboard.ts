@@ -77,6 +77,5 @@ Billboard.init(
                 }
             }
         }
-
     }
 );

@@ -1,4 +1,4 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, Optional, Op } from "sequelize";
 import sequelize from "../config/db";
 import { v4 as uuidv4 } from "uuid";
 
@@ -20,6 +20,19 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date | null;
 
+    static async generateStoreId(): Promise<string> {
+            const result = await this.max('id', {
+                where: {
+                    id: {
+                        [Op.like]: 'STORE%'
+                    }
+                }
+            }) as string | null;
+            
+            const lastNumber = result ? parseInt(result.substring(5), 8) : 0;
+            return `STORE${(lastNumber + 1).toString().padStart(3, '0')}`;
+        }
+
     static associate(models: any){
         this.hasMany(models.Billboard, {
             foreignKey: "storeId",
@@ -31,9 +44,9 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
 Store.init( 
     {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: uuidv4,
+            type: DataTypes.STRING,
             primaryKey: true,
+            allowNull: false
         },
         name: {
             type: DataTypes.STRING,
@@ -56,6 +69,13 @@ Store.init(
         defaultScope: {
             attributes: { exclude: ["deletedAt", "createdAt", "updatedAt"] },
         },
+        hooks: {
+            beforeValidate: async (store) => {
+                if (!store.id) {
+                    store.id = await Store.generateStoreId();
+                }
+            }
+        }
   }
 );
 
