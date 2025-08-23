@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional, Op } from "sequelize";
 import sequelize from "../config/db";
-import { v4 as uuidv4 } from "uuid";
 
 interface StoreAttributes {
     id: string;
@@ -41,6 +40,10 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
         this.hasMany(models.Size, {
             foreignKey: "storeId",
             as: "sizes"
+        });
+        this.hasMany(models.Color, {
+            foreignKey: "storeId",
+            as: "colors"
         });
     }
 }
