@@ -40,7 +40,14 @@ export const getAllBillboards = asyncHandler(async(req: Request, res: Response):
 
     const billboards = await Billboard.findAll({
         where: { storeId },
-        order: [["createdAt", "DESC"]], 
+        order: [["createdAt", "DESC"]],
+        include: [
+            {
+                model: Store,
+                as: "store",
+                attributes: ["id", "name"]
+            }
+        ]
     });
 
     res.status(201).json(new ApiResponse(200, "Billboards fetched successfully", billboards));
