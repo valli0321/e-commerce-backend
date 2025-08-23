@@ -5,11 +5,20 @@ dotenv.config();
 
 const sequelize = new Sequelize({
     dialect: "mysql",
-    host: process.env.DB_HOST || "localhost",
-    username: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "admin@123",
-    database: process.env.DB_NAME || "ecommerce-admin",
+    host: process.env.DB_HOST,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
     logging: false,
+    dialectOptions: {
+        charset: 'utf8mb4',
+    },
+    define: {
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_bin',
+        underscored: false,
+        timestamps: true
+    },
 });
 
 export default sequelize;
