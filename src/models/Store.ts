@@ -24,13 +24,13 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
             const result = await this.max('id', {
                 where: {
                     id: {
-                        [Op.like]: 'STORE%'
+                        [Op.like]: 'store_%'
                     }
                 }
             }) as string | null;
             
-            const lastNumber = result ? parseInt(result.substring(5), 8) : 0;
-            return `STORE${(lastNumber + 1).toString().padStart(3, '0')}`;
+            const lastNumber = result ? parseInt(result.substring(6), 8) : 0;
+            return `store_${(lastNumber + 1).toString().padStart(3, '0')}`;
         }
 
     static associate(models: any){
@@ -38,13 +38,17 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
             foreignKey: "storeId",
             as: "billboards"
         });
+        this.hasMany(models.Size, {
+            foreignKey: "storeId",
+            as: "sizes"
+        });
     }
 }
 
 Store.init( 
     {
         id: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             primaryKey: true,
             allowNull: false
         },
@@ -65,7 +69,9 @@ Store.init(
         sequelize,
         paranoid: true,
         timestamps: true,
-        tableName: "Stores",
+        tableName: "stores",
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_bin',
         defaultScope: {
             attributes: { exclude: ["deletedAt", "createdAt", "updatedAt"] },
         },
@@ -78,4 +84,3 @@ Store.init(
         }
   }
 );
-
