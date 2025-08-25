@@ -13,6 +13,7 @@ import userRoutes from "./routes/userRoutes";
 import billboardRoutes from "./routes/billboardRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import sizeRoutes from "./routes/sizeRoutes";
+import colorRoutes from "./routes/colorRoutes";
 import { errorHandler } from './utils/errorHandler';
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use("/api/stores", storeRoutes);
 app.use("/api", billboardRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", sizeRoutes);
+app.use("/api", colorRoutes);
 
 // Rate limit for auth routes
 app.use("/api/users/login", authLimiter);
