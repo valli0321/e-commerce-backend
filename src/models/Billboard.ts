@@ -78,6 +78,11 @@ Billboard.init(
         paranoid: true,
         charset: 'utf8mb4',
         collate: 'utf8mb4_bin',
+        indexes: [
+            {
+                fields: ["storeId"]
+            }
+        ],
         defaultScope: {
             attributes: { exclude: ["deletedAt", "updatedAt"] },
         },

@@ -45,6 +45,10 @@ export default class Store extends Model<StoreAttributes, StoreCreationAttribute
             foreignKey: "storeId",
             as: "colors"
         });
+        this.hasMany(models.Product, {
+            foreignKey: "storeId",
+            as: "products"
+        });
     }
 }
 

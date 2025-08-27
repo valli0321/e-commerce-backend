@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional, Op } from "sequelize";
 import sequelize from "../config/db";
+import { v4 as uuidv4 } from "uuid";
 
 interface ColorAttributes {
     id: string;
@@ -37,8 +38,8 @@ export default class Color extends Model<ColorAttributes, ColorCreationAttribute
 Color.init( 
     {
         id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: () => uuidv4(),
             primaryKey: true,
             allowNull: false
         },

@@ -38,10 +38,13 @@ export default class Category extends Model<CategoryAttributes, CategoryCreation
             foreignKey: "storeId",
             as: "store"
         });
-        
         this.belongsTo(models.Billboard, {
             foreignKey: "billboardId",
             as: "billboard"
+        });
+        this.hasMany(models.Product, {
+            foreignKey: "categoryId",
+            as: "products"
         });
     }
 }
@@ -84,6 +87,11 @@ Category.init(
         charset: 'utf8mb4',
         collate: 'utf8mb4_bin',
         paranoid: true,
+        indexes: [
+            {
+                fields: ["billboardId", "storeId"],
+            },
+        ],
         defaultScope: {
             attributes: { exclude: ["deletedAt", "updatedAt"] },
         },

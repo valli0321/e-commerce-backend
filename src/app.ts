@@ -14,6 +14,7 @@ import billboardRoutes from "./routes/billboardRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import sizeRoutes from "./routes/sizeRoutes";
 import colorRoutes from "./routes/colorRoutes";
+import productRoutes from "./routes/productRoutes";
 import { errorHandler } from './utils/errorHandler';
 
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/api", billboardRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", sizeRoutes);
 app.use("/api", colorRoutes);
+app.use("/api", productRoutes);
 
 // Rate limit for auth routes
 app.use("/api/users/login", authLimiter);

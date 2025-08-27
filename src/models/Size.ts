@@ -27,15 +27,18 @@ export default class Size extends Model<SizeAttributes, SizeCreationAttributes> 
             foreignKey: "storeId",
             as: "store"
         });
+        this.hasMany(models.Product, {
+            foreignKey: "sizeId",
+            as: "products"
+        });
     }
-    
 }
 
 Size.init( 
     {
         id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: () => uuidv4(),
             primaryKey: true,
             allowNull: false
         },
