@@ -7,8 +7,9 @@ const router = express.Router();
 
 router.post("/:storeId/billboards", authMiddleware, createBillboard);
 
-router.get("/:storeId/billboards", authMiddleware, getAllBillboards);
-router.get("/billboardById/:billboardId", authMiddleware, getBillboardById)
+//public route
+router.get("/:storeId/billboards", getAllBillboards);
+router.get("/billboardById/:billboardId", getBillboardById)
 
 router.patch("/:storeId/billboards/:billboardId", authMiddleware, updateBillboard);
 router.delete("/:storeId/billboards/:billboardId", authMiddleware, deleteBillboard);

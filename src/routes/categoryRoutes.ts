@@ -7,8 +7,9 @@ const router = express.Router();
 
 router.post("/:storeId/categories", authMiddleware, createCategory);
 
-router.get("/:storeId/categories", authMiddleware, getAllCategories);
-router.get("/categoryById/:categoryId", authMiddleware, getCategoryById)
+//public routes
+router.get("/:storeId/categories", getAllCategories);
+router.get("/categoryById/:categoryId", getCategoryById)
 
 router.patch("/:storeId/categories/:categoryId", authMiddleware, updateCategory);
 router.delete("/:storeId/categories/:categoryId", authMiddleware, deleteCategory);
