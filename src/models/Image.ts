@@ -61,7 +61,7 @@ Image.init(
             {
                 fields: ["productId"],
             },
-            ],
+        ],
         defaultScope: {
             attributes: { exclude: ["deletedAt", "updatedAt"] },
         },

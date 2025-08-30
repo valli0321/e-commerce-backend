@@ -55,7 +55,11 @@ export const getAllColors = asyncHandler(async(req: Request, res: Response): Pro
 });
 
 export const getColorById = asyncHandler(async(req: Request, res: Response): Promise<void> => {
-    const { colorId } = req.params;
+    const { storeId, colorId } = req.params;
+
+    if(!storeId){
+        throw new ApiError(400, "Store ID is required")
+    }
 
     if(!colorId){
         throw new ApiError(400, "Color ID is required")

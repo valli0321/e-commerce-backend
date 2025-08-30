@@ -7,8 +7,9 @@ const router = express.Router();
 
 router.post("/:storeId/products", authMiddleware, createProduct);
 
-router.get("/:storeId/products", authMiddleware, getAllProducts);
-router.get("/productById/:productId", authMiddleware, getProductById)
+// public routes
+router.get("/:storeId/products", getAllProducts);
+router.get("/:storeId/products/:productId", getProductById)
 
 router.patch("/:storeId/products/:productId", authMiddleware, updateProduct);
 router.delete("/:storeId/products/:productId", authMiddleware, deleteProduct);

@@ -9,7 +9,7 @@ router.post("/:storeId/categories", authMiddleware, createCategory);
 
 //public routes
 router.get("/:storeId/categories", getAllCategories);
-router.get("/categoryById/:categoryId", getCategoryById)
+router.get("/:storeId/categories/:categoryId", getCategoryById)
 
 router.patch("/:storeId/categories/:categoryId", authMiddleware, updateCategory);
 router.delete("/:storeId/categories/:categoryId", authMiddleware, deleteCategory);
