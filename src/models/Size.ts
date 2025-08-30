@@ -67,6 +67,11 @@ Size.init(
         sequelize,
         paranoid: true,
         timestamps: true,
+        indexes: [
+            {
+                fields: ["storeId"],
+            },
+        ],
         tableName: "sizes",
         charset: 'utf8mb4',
         collate: 'utf8mb4_bin',

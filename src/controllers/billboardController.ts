@@ -54,7 +54,11 @@ export const getAllBillboards = asyncHandler(async(req: Request, res: Response):
 });
 
 export const getBillboardById = asyncHandler(async(req: Request, res: Response): Promise<void> => {
-    const { billboardId } = req.params;
+    const { storeId, billboardId } = req.params;
+
+    if(!storeId){
+        throw new ApiError(400, "Store ID is required")
+    }
 
     if(!billboardId){
         throw new ApiError(400, "Billboard ID is required")

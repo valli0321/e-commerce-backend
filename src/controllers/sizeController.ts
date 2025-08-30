@@ -55,7 +55,11 @@ export const getAllSizes = asyncHandler(async(req: Request, res: Response): Prom
 });
 
 export const getSizeById = asyncHandler(async(req: Request, res: Response): Promise<void> => {
-    const { sizeId } = req.params;
+    const { storeId, sizeId } = req.params;
+
+    if(!storeId){
+        throw new ApiError(400, "Store ID is required")
+    }
 
     if(!sizeId){
         throw new ApiError(400, "Size ID is required")

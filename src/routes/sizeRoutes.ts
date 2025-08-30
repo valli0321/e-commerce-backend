@@ -9,7 +9,7 @@ router.post("/:storeId/sizes", authMiddleware, createSize);
 
 // public route
 router.get("/:storeId/sizes", getAllSizes);
-router.get("/sizeById/:sizeId", getSizeById)
+router.get("/:storeId/sizes/:sizeId", getSizeById)
 
 router.patch("/:storeId/sizes/:sizeId", authMiddleware, updateSize);
 router.delete("/:storeId/sizes/:sizeId", authMiddleware, deleteSize);

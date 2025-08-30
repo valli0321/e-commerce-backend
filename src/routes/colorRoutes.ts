@@ -9,7 +9,7 @@ router.post("/:storeId/colors", authMiddleware, createColor);
 
 //public route
 router.get("/:storeId/colors", getAllColors);
-router.get("/colorById/:colorId", getColorById)
+router.get("/:storeId/colors/:colorId", getColorById)
 
 router.patch("/:storeId/colors/:colorId", authMiddleware, updateColor);
 router.delete("/:storeId/colors/:colorId", authMiddleware, deleteColor);
