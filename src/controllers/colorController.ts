@@ -66,7 +66,7 @@ export const getColorById = asyncHandler(async(req: Request, res: Response): Pro
     }
 
     const color = await Color.findOne({ 
-        where: { id: colorId },
+        where: { id: colorId, storeId },
         include: [
             {
                 model: Store,

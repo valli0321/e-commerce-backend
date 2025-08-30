@@ -55,14 +55,18 @@ export const getAllCategories = asyncHandler(async(req: Request, res: Response):
 });
 
 export const getCategoryById = asyncHandler(async(req: Request, res: Response): Promise<void> => {
-    const { categoryId } = req.params;
+    const { storeId, categoryId } = req.params;
+
+     if(!storeId){
+        throw new ApiError(400, "Store ID is required")
+    }
 
     if(!categoryId){
         throw new ApiError(400, "Billboard ID is required")
     }
 
     const category = await Category.findOne({
-        where: { id: categoryId },
+        where: { id: categoryId, storeId },
         include: [
         {
             model: Billboard,

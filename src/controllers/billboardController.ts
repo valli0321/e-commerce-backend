@@ -64,7 +64,7 @@ export const getBillboardById = asyncHandler(async(req: Request, res: Response):
         throw new ApiError(400, "Billboard ID is required")
     }
 
-    const billboard = await Billboard.findOne({ where: { id: billboardId }});
+    const billboard = await Billboard.findOne({ where: { id: billboardId, storeId }});
 
     if(!billboard){
         throw new ApiError(404, "Billboard not found");

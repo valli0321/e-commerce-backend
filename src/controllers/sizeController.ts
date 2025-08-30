@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/ApiError";
 import { ApiResponse } from "../utils/ApiResponse";
-import Billboard from "../models/Billboard";
 import Store from "../models/Store";
 import Size from "../models/Size";
 
@@ -66,7 +65,7 @@ export const getSizeById = asyncHandler(async(req: Request, res: Response): Prom
     }
 
     const size = await Size.findOne({ 
-        where: { id: sizeId },
+        where: { id: sizeId, storeId },
         include: [
             {
                 model: Store,
