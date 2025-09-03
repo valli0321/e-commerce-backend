@@ -15,14 +15,33 @@ import categoryRoutes from "./routes/categoryRoutes";
 import sizeRoutes from "./routes/sizeRoutes";
 import colorRoutes from "./routes/colorRoutes";
 import productRoutes from "./routes/productRoutes";
+import checkoutRoutes from "./routes/checkoutRoutes";
+import paymentRoutes from "./routes/paymentRoutes";
+import orderRoutes from "./routes/orderRoutes";
+
 import { errorHandler } from './utils/errorHandler';
 
 dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_ADMIN_URL,
+  process.env.FRONTEND_STORE_URL,
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like server-to-server or Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      console.log('Allowed origins:', allowedOrigins);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -46,6 +65,9 @@ app.use("/api", categoryRoutes);
 app.use("/api", sizeRoutes);
 app.use("/api", colorRoutes);
 app.use("/api", productRoutes);
+app.use("/api", checkoutRoutes);
+app.use("/api", paymentRoutes);
+app.use("/api", orderRoutes);
 
 // Rate limit for auth routes
 app.use("/api/users/login", authLimiter);
@@ -58,8 +80,8 @@ const connectDB = async () => {
     await db.sequelize.authenticate();
     console.log('Connected to Database');
 
-    await db.sequelize.sync({ alter: true });
-    console.log('Database synced successfully');
+    // await db.sequelize.sync({ alter: true });
+    // console.log('Database synced successfully');
   } catch (err: any) {
     console.error('Database connection error', err);
   }

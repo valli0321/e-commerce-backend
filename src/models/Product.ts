@@ -63,6 +63,10 @@ export default class Product extends Model<ProductAttributes, ProductCreationAtt
             foreignKey: "productId",
             as: "images",
         });
+        this.hasMany(models.OrderItem, {
+            foreignKey: "productId",
+            as: "orderItems",
+        });
     }
 }
 

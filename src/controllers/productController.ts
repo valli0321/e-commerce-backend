@@ -68,7 +68,7 @@ export const createProduct = asyncHandler(async( req: Request, res: Response): P
 
 export const getAllProducts = asyncHandler(async(req: Request, res: Response): Promise<void> => {
     const { storeId } = req.params;
-    const { search, colorId, sizeId, categoryId, isFeatured } = req.query
+    const { search, colorId, sizeId, categoryId, isFeatured, isArchived } = req.query
 
     if(!storeId){
         throw new ApiError(400, "Store ID is required")
@@ -98,6 +98,9 @@ export const getAllProducts = asyncHandler(async(req: Request, res: Response): P
     }
     if(typeof isFeatured !== "undefined"){
         filters.isFeatured = isFeatured === "true"
+    }
+    if(typeof isArchived !== "undefined"){
+        filters.isArchived = isArchived === "true"
     }
 
     const products = await Product.findAll({
