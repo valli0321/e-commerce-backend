@@ -73,4 +73,3 @@ export const checkout = asyncHandler(async(req: Request, res: Response): Promise
 
     res.status(201).json(new ApiResponse(200, "Checkout initiated successfully", resOrder));
 });
-
